@@ -1,0 +1,37 @@
+
+@font-face {font-family: "iconfont";
+  src: url('//at.alicdn.com/t/font_891852_zuouh4wzeqh.eot?t=1540634321754'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_891852_zuouh4wzeqh.eot?t=1540634321754#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'),
+  url('//at.alicdn.com/t/font_891852_zuouh4wzeqh.ttf?t=1540634321754') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_891852_zuouh4wzeqh.svg?t=1540634321754#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-loading:before { content: "\e65e"; }
+
+.icon-recommend:before { content: "\e642"; }
+
+.icon-play:before { content: "\e647"; }
+
+.icon-next:before { content: "\e648"; }
+
+.icon-last:before { content: "\e649"; }
+
+.icon-pause:before { content: "\e64a"; }
+
+.icon-single:before { content: "\e64b"; }
+
+.icon-list:before { content: "\e64c"; }
+
+.icon-random:before { content: "\e64d"; }
+
+.icon-collect:before { content: "\e64e"; }
+
