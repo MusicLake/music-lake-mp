@@ -1,10 +1,11 @@
 import Fly from "flyio/dist/npm/wx";
-import Vue from 'vue'
+import Vue from "vue";
 
 const fly = new Fly;
 
 fly.config.baseURL = "https://suen-music-api.leanapp.cn";
-fly.config.timeout = 5000;
+// fly.config.baseURL = "http://localhost:3000";
+fly.config.timeout = 30 * 1000;
 fly.config.headers = {
     "Content-Type": "application/x-www-form-urlencoded"
 };
@@ -26,4 +27,15 @@ fly.interceptors.response.use(
     }
 );
 
-export default fly;
+export default function({ vendor, method, params }) {
+    const arvgs = {
+        method
+    };
+    if (vendor) {
+        arvgs.vendor = vendor;
+    }
+    if (params) {
+        arvgs.params = JSON.stringify(params);
+    }
+    return fly.get("/", arvgs);
+};

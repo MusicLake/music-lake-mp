@@ -106,9 +106,9 @@ export default {
             commit("updateUrl", null);
             commit("updatePause", true);
             Vue.$store.dispatch("lyric/init");
-            const data = await Vue.$musicApi.get("/", {
+            const data = await Vue.$musicApi({
                 method: "getSongUrl",
-                restParams: [
+                params: [
                     song.vendor,
                     song.songId,
                     128000

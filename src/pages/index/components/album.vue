@@ -1,6 +1,6 @@
 <template>
     <div class="album">
-        <img :src="cover" class="cover" v-if="song"/>
+        <img :src="cover" class="cover" v-if="song" :style="coverStyleStr"/>
         <div class="lyric" v-if="lyrics.length">
             <p>{{lyrics[activeIndex][1]}}</p>
         </div>
@@ -10,12 +10,31 @@
     import { mapState, mapGetters } from "vuex";
 
     export default {
+        data() {
+            return {
+                nextSongFlag: false
+            };
+        },
         computed: {
-            ...mapState("play", ["song"]),
+            ...mapState("play", ["song", "pause"]),
             ...mapState("lyric", ["lyrics"]),
             ...mapGetters("lyric", ["activeIndex"]),
             cover() {
-                return this.song ? this.song.album.cover.replace("300x300", "500x500") : ''
+                return this.song ? this.song.album.cover.replace("300x300", "500x500") : "";
+            },
+            coverStyleStr() {
+                const rs = [];
+                if (!this.nextSongFlag) rs.push(`animation: 30s ${this.s.rotate} linear infinite`);
+                rs.push(`animation-play-state: ${this.pause ? "paused" : "running"}; `);
+                return rs.join("; ");
+            }
+        },
+        watch: {
+            song() {
+                this.nextSongFlag = true;
+                setTimeout(() => {
+                    this.nextSongFlag = false;
+                }, 500);
             }
         }
     };
@@ -33,13 +52,7 @@
             margin: 10vw auto 0;
             display: block;
             border: 1.2vw solid #777;
-            animation: 30s rotate linear infinite;
             box-sizing: border-box;
-            @keyframes rotate {
-                to {
-                    transform: rotate(360deg);
-                }
-            }
         }
         .lyric {
             font-size: 4.4vw;
@@ -56,6 +69,13 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
             }
+        }
+    }
+</style>
+<style lang="scss" module="s">
+    @keyframes rotate {
+        to {
+            transform: rotate(360deg);
         }
     }
 </style>

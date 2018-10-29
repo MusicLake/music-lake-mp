@@ -4,11 +4,6 @@
         <div class="cover" :style="coverStyleStr"></div>
         <div class="main">
             <div :style="navBarStyleStr"></div>
-            <!--<div class="top">-->
-            <!--<span class="active">推荐歌单</span>-->
-            <!--<div class="divider"></div>-->
-            <!--<span>个人歌单</span>-->
-            <!--</div>-->
             <p class="name">
                 {{song ? song.name : ""}}
             </p>
@@ -33,12 +28,19 @@
                     :disabled="!duration"
                     backgroundColor="rgba(255, 255, 255, .4)"
             />
-            <div class="control">
-                <i :class="cycleClassStr" @click="toggleCircle"></i>
-                <i class="iconfont sub icon-last" @click="last"></i>
-                <i :class="playPauseClassStr" @click="playPause"></i>
-                <i class="iconfont sub icon-next" @click="next"></i>
-                <i class="iconfont third icon-collect" @click="collect"></i>
+            <div class="footer">
+                <div class="control">
+                    <i :class="cycleClassStr" @click="toggleCircle"></i>
+                    <i class="iconfont sub icon-last" @click="last"></i>
+                    <i :class="playPauseClassStr" @click="playPause"></i>
+                    <i class="iconfont sub icon-next" @click="next"></i>
+                    <i class="iconfont third icon-collect" @click="collect"></i>
+                </div>
+                <div class="tab-bar">
+                    <i class="iconfont icon-discover third" @click="routeTo('../discover/main')"></i>
+                    <i class="iconfont icon-search third"></i>
+                    <i class="iconfont icon-user third"></i>
+                </div>
             </div>
         </div>
     </div>
@@ -122,16 +124,32 @@
                 flex: 1;
             }
             .slider {
-                margin: 4vw 0 0;
+                margin: 0;
             }
-            .control {
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                padding: 2vw 0;
-                height: 20vw;
-                .iconfont {
-                    color: rgba(255, 255, 255, .8);
+            .footer {
+                display:flex;
+                flex-direction:column;
+                justify-content:space-between;
+                box-sizing:border-box;
+                padding: 2vw 0 3vw;
+                height: 36vw;
+                .control,
+                .tab-bar {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-around;
+                    align-items: center;
+                }
+                .control {
+                    width: 100%;
+                    .iconfont {
+                        color: rgba(255, 255, 255, .8);
+                    }
+                    .playPause {
+                        font-size: 18vw;
+                    }
+                }
+                .tab-bar {
                 }
                 .sub {
                     font-size: 11vw;
@@ -140,8 +158,8 @@
                     font-size: 8vw;
                     color: rgba(255, 255, 255, .7);
                 }
-                .playPause {
-                    font-size: 18vw;
+                .tab-bar {
+                    width: 100%;
                 }
             }
         }

@@ -11,8 +11,7 @@ export default {
         return {
             navTop: 20,
             sliderHeight: 15,
-            progress: 0,
-            tab: "lyric"
+            progress: 0
         };
     },
 
@@ -33,7 +32,7 @@ export default {
             return `height: ${this.navTop}px`;
         },
         sliderStyleStr() {
-            return `margin-bottom: -${this.sliderHeight / 2}px;`;
+            return `margin-bottom: -${this.sliderHeight / 2 - 4}px;`;
         }
     },
     watch: {
@@ -64,9 +63,15 @@ export default {
         },
         sliderChange(event) {
             this.setAudioProgress(event.target.value);
+        },
+        routeTo(url) {
+            wx.navigateTo({
+                url
+            });
         }
     },
     mounted() {
+        // this.routeTo('../discover/main')
         const query = wx.createSelectorQuery();
         query.select("#slider").boundingClientRect();
         query.exec((res) => {

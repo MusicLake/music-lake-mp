@@ -2,6 +2,12 @@
     <div class="lyric" id="lyric">
         <div id="lyric_item_height"></div>
         <i class="iconfont icon-loading" v-if="loading"></i>
+        <p v-else-if="getLyricFail" class="no-lyric" @click="init">
+            加载失败，点击重新加载
+        </p>
+        <p v-else-if="!lyrics.length" class="no-lyric">
+            暂无歌词
+        </p>
         <div class="wrapper" v-else>
             <ul :style="style" class="main" id="lyric_main">
                 <li v-for="(item,index) in lyrics"
@@ -15,7 +21,7 @@
     </div>
 </template>s
 <script>
-    import { mapState, mapGetters } from "vuex";
+    import { mapState, mapGetters, mapActions } from "vuex";
 
     export default {
         data() {
@@ -38,6 +44,9 @@
                 return `transform: translateY(-${result * 9}vw)`;
             }
         },
+        methods: {
+            ...mapActions("lyric", ["init"])
+        },
         mounted() {
             const query = wx.createSelectorQuery();
             query.select("#lyric").boundingClientRect();
@@ -53,9 +62,12 @@
     .lyric {
         height: 100%;
         overflow: hidden;
-        padding:4vw 4vw 9vw;
+        padding: 4vw 4vw 9vw;
         position: relative;
         box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         $height: 9vw;
         #lyric_item_height {
             height: $height;
@@ -81,9 +93,14 @@
                 }
             }
         }
+        .no-lyric {
+            color: rgba(255, 255, 255, .7);
+            font-size: 4vw;
+        }
         .wrapper {
             height: 100%;
             overflow: hidden;
+            -webkit-mask: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), #fff 15%, #fff 85%, rgba(0, 0, 0, 0));
             .main {
                 transition: all .5s;
                 .item {

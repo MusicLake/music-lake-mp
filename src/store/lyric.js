@@ -7,7 +7,8 @@ export default {
         lyrics: [],
         translate: [],
         loading: false,
-        showTranslate: false
+        showTranslate: false,
+        getLyricFail: false
     },
     mutations: {
         update(state, val) {
@@ -24,29 +25,37 @@ export default {
                 lyrics: [],
                 translate: []
             });
-            const data = await Vue.$musicApi.get("/", {
+            const data = await Vue.$musicApi({
                 method: "getLyric",
-                restParams: [
+                params: [
                     playInfo.vendor,
                     playInfo.songId
                 ]
             });
+            let lyrics = [], translate = [], getLyricFail = false;
+            if (data.status) {
+                lyrics = data.data.lyric.map(item => {
+                    let arr = item[0].match(/^(\d+):(\d+).(\d+)$/);
+                    if (arr) {
+                        item[0] = parseInt(arr[1]) * 60 * 1000 + parseInt(arr[2]) * 1000 + parseInt(arr[3].padEnd(3, "0"));
+                    }
+                    return item;
+                }).filter(item => item[1]);
+                translate = data.data.translate.map(item => {
+                    let arr = item[0].match(/^(\d+):(\d+).(\d+)$/);
+                    if (arr) {
+                        item[0] = parseInt(arr[1]) * 60 * 1000 + parseInt(arr[2]) * 1000 + parseInt(arr[3].padEnd(3, "0"));
+                    }
+                    return item;
+                }).filter(item => item[1]);
+            } else {
+                getLyricFail = true;
+            }
             commit("update", {
-                lyrics: (data.status ? data.data.lyric : []).map(item => {
-                    let arr = item[0].match(/^(\d+):(\d+).(\d+)$/);
-                    if (arr) {
-                        item[0] = parseInt(arr[1]) * 60 * 1000 + parseInt(arr[2]) * 1000 + parseInt(arr[3].padEnd(3, "0"));
-                    }
-                    return item;
-                }).filter(item => item[1]),
-                translate: (data.status ? data.data.translate : []).map(item => {
-                    let arr = item[0].match(/^(\d+):(\d+).(\d+)$/);
-                    if (arr) {
-                        item[0] = parseInt(arr[1]) * 60 * 1000 + parseInt(arr[2]) * 1000 + parseInt(arr[3].padEnd(3, "0"));
-                    }
-                    return item;
-                }).filter(item => item[1]),
-                loading: false
+                lyrics,
+                translate,
+                loading: false,
+                getLyricFail
             });
         }
     },

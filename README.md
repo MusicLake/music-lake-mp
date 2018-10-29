@@ -7,7 +7,11 @@
 - [安卓端](https://github.com/caiyonglong/MusicLake)
 
 ### 截图
-- album
-    ![](./screenshot/home.png)
+- cover
+    ![](./screenshot/cover.png)
+    
 - lyric
     ![](./screenshot/lyric.png)
+
+- discover
+    ![](./screenshot/discover.png)
